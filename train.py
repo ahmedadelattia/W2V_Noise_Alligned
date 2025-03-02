@@ -69,6 +69,7 @@ def main():
     # Load the configuration from the pretrained model.
     config = Wav2Vec2Config.from_pretrained(args.model_name_or_path)
     config.consistency_loss_weight = args.consistency_loss_weight
+    config.output_hidden_states = False
     print("Config loaded")
     time_str = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     args.output_dir = os.path.join(args.output_dir, time_str)
