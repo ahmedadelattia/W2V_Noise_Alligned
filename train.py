@@ -70,6 +70,7 @@ def main():
     config = Wav2Vec2Config.from_pretrained(args.model_name_or_path)
     config.consistency_loss_weight = args.consistency_loss_weight
     config.output_hidden_states = False
+    config.num_
     print("Config loaded")
     time_str = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     args.output_dir = os.path.join(args.output_dir, time_str)
@@ -85,6 +86,7 @@ def main():
         output_dir=args.output_dir,
         num_train_epochs=args.num_epochs,
         per_device_train_batch_size=args.per_device_train_batch_size,
+        per_device_eval_batch_size=args.per_device_train_batch_size,
         gradient_accumulation_steps=args.gradient_accumulation_steps,
         fp16=True,
         logging_dir="./logs",
