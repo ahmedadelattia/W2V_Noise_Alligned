@@ -75,8 +75,8 @@ def main():
     model = Wav2Vec2ForDualInputPreTraining.from_pretrained(args.model_name_or_path, config=config)
     print("Model loaded")
     # Prepare the dataset.
-    train_dataset = SimClassDataset(split="train")
-    val_dataset = SimClassDataset(split="development")
+    train_dataset = SimClassDataset(split="train", base_dir=args.data_dir)
+    val_dataset = SimClassDataset(split="development", base_dir=args.data_dir)
     print("Datasets loaded")
     # Define TrainingArguments.
     training_args = TrainingArguments(
