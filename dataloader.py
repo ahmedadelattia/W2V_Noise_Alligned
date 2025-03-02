@@ -110,7 +110,6 @@ class SimClassDataset(Dataset):
             noisy_waveform = self.transform(noisy_waveform)
             if clean_waveform is not None:
                 clean_waveform = self.transform(clean_waveform)
-        mask_time_indices = torch.zeros(noisy_waveform.shape[0], dtype=torch.bool)
         sample = {
             "input_noisy_values": noisy_waveform,
             "attention_mask_noisy": attention_mask_noisy,

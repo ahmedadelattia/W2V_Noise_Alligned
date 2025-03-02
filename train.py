@@ -62,6 +62,7 @@ def main():
     parser.add_argument("--num_steps", type=int, default=10000, help="Number of training epochs")
     parser.add_argument("--consistency_loss_weight", type=float, default=1, help="Weight for the consistency loss")
     parser.add_argument("--per_device_train_batch_size", type=int, default=2, help="Batch size per device")
+    parser.add_argument("--data_dir", type=str, default="/home/ahmed/Research_Data_2/Data/SimClass", help="Path to the SimClass dataset")
     args = parser.parse_args()
 
     # Load the configuration from the pretrained model.
