@@ -59,7 +59,7 @@ def main():
     parser = argparse.ArgumentParser(description="Train Dual-Input Wav2Vec2 PreTraining Model")
     parser.add_argument("--model_name_or_path", type=str, default="facebook/wav2vec2-large", help="Pretrained model checkpoint")
     parser.add_argument("--output_dir", type=str, default="./Wav2vec_SE", help="Output directory for model checkpoints")
-    parser.add_argument("--num_steps", type=int, default=10000, help="Number of training epochs")
+    parser.add_argument("--num_epochs", type=int, default=500, help="Number of training epochs")
     parser.add_argument("--consistency_loss_weight", type=float, default=1, help="Weight for the consistency loss")
     parser.add_argument("--per_device_train_batch_size", type=int, default=2, help="Batch size per device")
     parser.add_argument("--gradient_accumulation_steps", type=int, default=16, help="Number of gradient accumulation steps")
@@ -83,7 +83,7 @@ def main():
     # Define TrainingArguments.
     training_args = TrainingArguments(
         output_dir=args.output_dir,
-        max_steps=args.num_steps,  # Stop training after 10,000 steps
+        num_train_epochs=args.num_epochs,
         per_device_train_batch_size=args.per_device_train_batch_size,
         gradient_accumulation_steps=args.gradient_accumulation_steps,
         fp16=True,
