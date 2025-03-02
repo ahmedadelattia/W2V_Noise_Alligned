@@ -62,6 +62,7 @@ def main():
     parser.add_argument("--num_steps", type=int, default=10000, help="Number of training epochs")
     parser.add_argument("--consistency_loss_weight", type=float, default=1, help="Weight for the consistency loss")
     parser.add_argument("--per_device_train_batch_size", type=int, default=2, help="Batch size per device")
+    parser.add_argument("--gradient_accumulation_steps", type=int, default=16, help="Number of gradient accumulation steps")
     parser.add_argument("--data_dir", type=str, default="/home/ahmed/Research_Data_2/Data/SimClass", help="Path to the SimClass dataset")
     args = parser.parse_args()
 
@@ -83,7 +84,7 @@ def main():
         output_dir=args.output_dir,
         max_steps=args.num_steps,  # Stop training after 10,000 steps
         per_device_train_batch_size=args.per_device_train_batch_size,
-        gradient_accumulation_steps=16,
+        gradient_accumulation_steps=args.gradient_accumulation_steps,
         logging_dir="./logs",
         logging_steps=100,
         save_steps=500,
