@@ -15,7 +15,7 @@ from datetime import datetime
 def data_collator(features):
     """
     Collates a list of samples into a batch with dynamic padding for variable-length tensors.
-    For keys that need padding (e.g., 'input_values_noisy', 'attention_mask_noisy', 'input_values_clean'),
+    For keys that need padding (e.g., '"input_noisy_values", "attention_mask", "input_clean_values"'),
     we pad to the maximum sequence length in the batch.
     Other keys (like 'transcript', 'sample_rate') are collected as lists.
     
@@ -23,7 +23,7 @@ def data_collator(features):
     """
     batch = {}
     # Keys that we expect to be 1D tensors (or arrays) that need padding.
-    pad_keys = ["input_values_noisy", "attention_mask_noisy", "input_values_clean"]
+    pad_keys = ["input_noisy_values", "attention_mask", "input_clean_values", "mask_time_indices"]
 
     for key in features[0]:
         # If any sample has None for this key, set the entire batch for that key to None.
@@ -60,11 +60,13 @@ def main():
     parser.add_argument("--model_name_or_path", type=str, default="facebook/wav2vec2-large", help="Pretrained model checkpoint")
     parser.add_argument("--output_dir", type=str, default="./Wav2vec_SE", help="Output directory for model checkpoints")
     parser.add_argument("--num_steps", type=int, default=10000, help="Number of training epochs")
+    parser.add_argument("--consistency_loss_weight", type=float, default=1, help="Weight for the consistency loss")
     parser.add_argument("--per_device_train_batch_size", type=int, default=2, help="Batch size per device")
     args = parser.parse_args()
 
     # Load the configuration from the pretrained model.
     config = Wav2Vec2Config.from_pretrained(args.model_name_or_path)
+    config.consistency_loss_weight = args.consistency_loss_weight
     print("Config loaded")
     time_str = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     args.output_dir = os.path.join(args.output_dir, time_str)
